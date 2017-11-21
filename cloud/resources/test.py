@@ -1,6 +1,4 @@
-import json
 import logging
-import os
 
 from flask import jsonify, make_response
 from flask_restful import Resource
@@ -19,14 +17,13 @@ class TestData(Resource):
     @staticmethod
     def get():
         engine = create_engine(Config.RAS_SECURE_MESSAGE_DB_URI)
-        connection = engine.connect()
 
-        result = connection.execute("SELECT body FROM public.secure_message ")
+        with engine.begin() as connection:
+            result = connection.execute("SELECT body "
+                                        "FROM public.secure_message ")
 
-        data = []
-        for row in result:
-            data.append(row['body'])
-
-        connection.close()
+            data = []
+            for row in result:
+                data.append(row['body'])
 
         return make_response(jsonify(data), 200)

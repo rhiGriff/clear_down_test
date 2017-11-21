@@ -11,24 +11,16 @@ from cloud.resources.test import TestData
 from cloud.cloud_foundry import ONSCloudFoundry
 from logger_config import logger_initial_config
 
+
 logger_initial_config(service_name='clear_down')
 logger = wrap_logger(logging.getLogger(__name__))
 
 # use cf env to extract Cloud Foundry environment
 cf = ONSCloudFoundry()
 
-
 app = Flask(__name__)
 api = Api(app)
 CORS(app)
-
-if cf.detected:
-    logger.info('Cloud Foundry environment identified.', protocol=cf.protocol, database=cf.database())
-    app.config['SQLALCHEMY_DATABASE_URI'] = cf.credentials()
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SECURE_MESSAGING_DATABASE_URL', 'postgresql://postgres:postgres@localhost:5432')
-
-app.config['SQLALCHEMY_POOL_SIZE'] = os.getenv('SQLALCHEMY_POOL_SIZE', None)
 
 logger.info('Starting clear down test ...')
 
