@@ -54,7 +54,7 @@ class DropCollectionInstrument(Resource):
             engine = create_engine(config.RAS_COLLECTION_INSTRUMENT_DB_URI)
             logger.info('Deleting Collection Instrument Database')
             # TODO: Check if correct schema used
-            metadata = MetaData(bind=engine, reflect=True, schema='iac')
+            metadata = MetaData(bind=engine, reflect=True, schema='')
             for t in metadata.sorted_tables:
                 print(t)
 
@@ -170,3 +170,39 @@ class DropNotifyGateway(Resource):
             return 200
         except Exception as e:
             logger.error('Failed to delete Notify Gateway Database', error=e)
+
+
+class DropIAC(Resource):
+
+    @staticmethod
+    def post():
+
+        try:
+            engine = create_engine(config.RM_IAC_SERVICE)
+            logger.info('Deleting IAC Database')
+            metadata = MetaData(bind=engine, reflect=True, schema='iac')
+            for t in metadata.sorted_tables:
+                print(t)
+
+            # metadata.drop_all()
+            return 200
+        except Exception as e:
+            logger.error('Failed to delete IAC Database', error=e)
+
+
+class DropSurvey(Resource):
+
+    @staticmethod
+    def post():
+
+        try:
+            engine = create_engine(config.RM_SURVEY_SERVICE)
+            logger.info('Deleting Survey Database')
+            metadata = MetaData(bind=engine, reflect=True, schema='survey')
+            for t in metadata.sorted_tables:
+                print(t)
+
+            # metadata.drop_all()
+            return 200
+        except Exception as e:
+            logger.error('Failed to delete Survey Database', error=e)
