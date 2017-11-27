@@ -9,3 +9,4 @@ RM_SURVEY_SERVICE = os.getenv('RM_SURVEY_SERVICE', 'postgres://postgres:postgres
 RM_COLLECTION_EXERCISE = os.getenv('RM_COLLECTION_EXERCISE', 'postgres://postgres:postgres@localhost:5432/postgres')
 RM_ACTION_SERVICE = os.getenv('RM_ACTION_SERVICE', 'postgres://postgres:postgres@localhost:5432/postgres')
 RM_ACTION_EXPORTER_SERVICE = os.getenv('RM_ACTION_EXPORTER_SERVICE', 'postgres://postgres:postgres@localhost:5432/postgres')
+RM_NOTIFY_GATEWAY_SERVICE = os.getenv('RM_NOTIFY_GATEWAY_SERVICE', 'postgres://postgres:postgres@localhost:5432/postgres')

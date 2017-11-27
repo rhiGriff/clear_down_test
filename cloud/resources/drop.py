@@ -53,8 +53,8 @@ class DropCollectionInstrument(Resource):
         try:
             engine = create_engine(config.RAS_COLLECTION_INSTRUMENT_DB_URI)
             logger.info('Deleting Collection Instrument Database')
-            # TODO: Find the correct schema
-            metadata = MetaData(bind=engine, reflect=True, schema='')
+            # TODO: Check if correct schema used
+            metadata = MetaData(bind=engine, reflect=True, schema='iac')
             for t in metadata.sorted_tables:
                 print(t)
 
@@ -152,3 +152,21 @@ class DropActionExporter(Resource):
             return 200
         except Exception as e:
             logger.error('Failed to delete Action Exporter Database', error=e)
+
+
+class DropNotifyGateway(Resource):
+
+    @staticmethod
+    def post():
+
+        try:
+            engine = create_engine(config.RM_NOTIFY_GATEWAY_SERVICE)
+            logger.info('Deleting Notify Gateway Database')
+            metadata = MetaData(bind=engine, reflect=True, schema='notifygatewaysvc')
+            for t in metadata.sorted_tables:
+                print(t)
+
+            # metadata.drop_all()
+            return 200
+        except Exception as e:
+            logger.error('Failed to delete Notify Gateway Database', error=e)
